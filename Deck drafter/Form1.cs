@@ -1,6 +1,6 @@
 namespace Deck_drafter
 {
-
+     
     public partial class Form1 : Form
     {
         public FileOpener fileOpener = new FileOpener();
@@ -93,9 +93,9 @@ namespace Deck_drafter
             EXPP3.Checked = false;
 
             Drafter.newUnitDraft();
-            this.UnitName1.Text = Drafter.draftUnitC1.BaseUnit.unitname.Substring(18);
-            this.UnitName2.Text = Drafter.draftUnitC2.BaseUnit.unitname.Substring(18);
-            this.UnitName3.Text = Drafter.draftUnitC3.BaseUnit.unitname.Substring(18);
+            this.UnitName1.Text = Drafter.draftUnitC1.BaseUnit.Username;
+            this.UnitName2.Text = Drafter.draftUnitC2.BaseUnit.Username;
+            this.UnitName3.Text = Drafter.draftUnitC3.BaseUnit.Username;
             this.EXPE1.Text = Convert.ToString(Math.Round(Drafter.draftUnitC1.BaseUnit.Numinpack * Drafter.draftUnitC1.BaseUnit.NuminpackMod[3]));
             this.EXPV1.Text = Convert.ToString(Math.Round(Drafter.draftUnitC1.BaseUnit.Numinpack * Drafter.draftUnitC1.BaseUnit.NuminpackMod[2]));
             this.EXPT1.Text = Convert.ToString(Math.Round(Drafter.draftUnitC1.BaseUnit.Numinpack * Drafter.draftUnitC1.BaseUnit.NuminpackMod[1]));
@@ -128,19 +128,19 @@ namespace Deck_drafter
 
             if(Drafter.draftUnitC1.transport != null) 
             { 
-            Transport1.Text = Drafter.draftUnitC1.transport.unitname.Substring(16);
+            Transport1.Text = Drafter.draftUnitC1.transport.username;
             }
             else { Transport1.Text = " "; }
 
             if (Drafter.draftUnitC2.transport != null)
             {
-                Transport2.Text = Drafter.draftUnitC2.transport.unitname.Substring(16);
+                Transport2.Text = Drafter.draftUnitC2.transport.username;
             }
             else { Transport2.Text = " "; }
 
             if (Drafter.draftUnitC3.transport != null)
             {
-                Transport3.Text = Drafter.draftUnitC3.transport.unitname.Substring(16);
+                Transport3.Text = Drafter.draftUnitC3.transport.username;
             }
             else { Transport3.Text = " "; }
 
@@ -158,8 +158,8 @@ namespace Deck_drafter
             }
             foreach (DraftUnit i in Drafter.LogiUnitsDrafted)
             {
-                Data2 = Data2 + i.BaseUnit.unitname.Substring(18);
-                if (i.transport != null){ Data2 = Data2 + " Tranport: " + i.transport.unitname.Substring(16); }
+                Data2 = Data2 + i.BaseUnit.unitname;
+                if (i.transport != null){ Data2 = Data2 + " Tranport: " + i.transport.unitname; }
                 Data2 = Data2 + "\n" + "\n";
             }
             this.LogiData.Text = Data1;
@@ -173,8 +173,8 @@ namespace Deck_drafter
             }
             foreach (DraftUnit i in Drafter.infUnitsDrafted)
             {
-                Data2 = Data2 + i.BaseUnit.unitname.Substring(18);
-                if (i.transport != null) { Data2 = Data2 + " Tranport: " + i.transport.unitname.Substring(16); }
+                Data2 = Data2 + i.BaseUnit.unitname;
+                if (i.transport != null) { Data2 = Data2 + " Tranport: " + i.transport.unitname; }
                 Data2 = Data2 + "\n" + "\n";
             }
             this.InfData1.Text = Data1;
@@ -188,8 +188,8 @@ namespace Deck_drafter
             }
             foreach (DraftUnit i in Drafter.artUnitsDrafted)
             {
-                Data2 = Data2 + i.BaseUnit.unitname.Substring(18);
-                if (i.transport != null) { Data2 = Data2 + " Tranport: " + i.transport.unitname.Substring(16); }
+                Data2 = Data2 + i.BaseUnit.unitname;
+                if (i.transport != null) { Data2 = Data2 + " Tranport: " + i.transport.unitname; }
                 Data2 = Data2 + "\n" + "\n";
             }
             this.artData1.Text = Data1;
@@ -203,8 +203,8 @@ namespace Deck_drafter
             }
             foreach (DraftUnit i in Drafter.TankUnitsDrafted)
             {
-                Data2 = Data2 + i.BaseUnit.unitname.Substring(18);
-                if (i.transport != null) { Data2 = Data2 + " Tranport: " + i.transport.unitname.Substring(16); }
+                Data2 = Data2 + i.BaseUnit.unitname;
+                if (i.transport != null) { Data2 = Data2 + " Tranport: " + i.transport.unitname; }
                 Data2 = Data2 + "\n" + "\n";
             }
             this.tnkData1.Text = Data1;
@@ -219,8 +219,8 @@ namespace Deck_drafter
             }
             foreach (DraftUnit i in Drafter.RecUnitsDrafted)
             {
-                Data2 = Data2 + i.BaseUnit.unitname.Substring(18);
-                if (i.transport != null) { Data2 = Data2 + " Tranport: " + i.transport.unitname.Substring(16); }
+                Data2 = Data2 + i.BaseUnit.unitname;
+                if (i.transport != null) { Data2 = Data2 + " Tranport: " + i.transport.unitname; }
                 Data2 = Data2 + "\n" + "\n";
             }
             this.redData1.Text = Data1;
@@ -234,8 +234,8 @@ namespace Deck_drafter
             }
             foreach (DraftUnit i in Drafter.AAUnitsDrafted)
             {
-                Data2 = Data2 + i.BaseUnit.unitname.Substring(18);
-                if (i.transport != null) { Data2 = Data2 + " Tranport: " + i.transport.unitname.Substring(16); }
+                Data2 = Data2 + i.BaseUnit.unitname;
+                if (i.transport != null) { Data2 = Data2 + " Tranport: " + i.transport.unitname; }
                 Data2 = Data2 + "\n" + "\n";
             }
             this.aaData1.Text = Data1;
@@ -249,8 +249,8 @@ namespace Deck_drafter
             }
             foreach (DraftUnit i in Drafter.helUnitsDrafted)
             {
-                Data2 = Data2 + i.BaseUnit.unitname.Substring(18);
-                if (i.transport != null) { Data2 = Data2 + " Tranport: " + i.transport.unitname.Substring(16); }
+                Data2 = Data2 + i.BaseUnit.unitname;
+                if (i.transport != null) { Data2 = Data2 + " Tranport: " + i.transport.unitname; }
                 Data2 = Data2 + "\n" + "\n";
             }
             this.helData1.Text = Data1;
@@ -264,8 +264,8 @@ namespace Deck_drafter
             }
             foreach (DraftUnit i in Drafter.airUnitsDrafted)
             {
-                Data2 = Data2 + i.BaseUnit.unitname.Substring(18);
-                if (i.transport != null) { Data2 = Data2 + " Tranport: " + i.transport.unitname.Substring(16); }
+                Data2 = Data2 + i.BaseUnit.unitname;
+                if (i.transport != null) { Data2 = Data2 + " Tranport: " + i.transport.unitname; }
                 Data2 = Data2 + "\n" + "\n";
             }
             this.airData1.Text = Data1;

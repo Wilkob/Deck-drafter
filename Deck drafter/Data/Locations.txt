@@ -1,0 +1,2 @@
+DivisionList: GameData\Generated\Gameplay\Decks
+DeckSerializer: \GameData\Generated\Gameplay\Decks

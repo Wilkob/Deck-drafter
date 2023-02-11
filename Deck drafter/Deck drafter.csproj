@@ -54,6 +54,9 @@
     <None Update="Data\Packs.ndf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Data\UnitNames.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Data\UniteDescriptor.ndf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

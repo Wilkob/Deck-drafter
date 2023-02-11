@@ -161,7 +161,7 @@ public class DeckEncoder
 
         output += encodeValue(1);
         output = bitStringtoText(output);
-        return encoding(output);
+        return output;
     }
 
     int xpLength(int xp)
@@ -205,7 +205,7 @@ public class DeckEncoder
         if (str.Length % 8 != 0)
         {
             int temp = (str.Length % 8);
-            str = str.PadLeft(str.Length + temp, '0');
+            str = str.PadRight(str.Length + temp, '0');
         }
         for (int i = 0; i + 8 <= str.Length; i += 8)
         {
@@ -223,7 +223,7 @@ public class DeckEncoder
             //char temp2 = Convert.ToChar(temp);
             output += temp;
         }
-        return output;
+        return encoding(output);
     }
 
 
@@ -243,6 +243,11 @@ public class DeckEncoder
         //accessJava();
         return toReturn;
         //return scriptEncoder.Encode(toEncode);
+    }
+    public static string Base64Encode(string plainText)
+    {
+        var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+        return System.Convert.ToBase64String(plainTextBytes);
     }
 
 }

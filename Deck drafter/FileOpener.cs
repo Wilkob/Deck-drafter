@@ -20,6 +20,7 @@ public class FileOpener
         UnitFileDivisionRules();
         getIDs();
         getunitdetails();
+        getunitnames();
     }
 
     void getDivsCosts()
@@ -76,7 +77,7 @@ public class FileOpener
                             s.Trim();
                             foreach (Division Division in Divisionlist)
                             {
-                                
+
                                 string n = Division.getname();
                                 if (n == "~/Descriptor_Deck_Division_RFA_TerrKdo_Sud_multi") { n = "~/Descriptor_Deck_Division_RFA_TerrKo_Sud_multi"; }
                                 n = n.Substring(n.IndexOf("_") + 1);
@@ -223,7 +224,7 @@ public class FileOpener
 
                         if (s != "")
                         {
-                            s = s.Substring(0, s.IndexOf(" "));
+                            //s = s.Substring(0, s.IndexOf(" "));
 
                             foreach (Division Division in Divisionlist)
 
@@ -232,7 +233,7 @@ public class FileOpener
                                 string n = Division.getname();
                                 n = n.Substring(n.IndexOf("/") + 1);
 
-                                if (s == n)
+                                if (s.Contains(n))
 
                                 {
 
@@ -317,14 +318,14 @@ public class FileOpener
                 int FoundC = 0;
                 while ((s = sr.ReadLine()) != null)
                 {
-                    if (s.Contains("Descriptor_Deck_Division")) 
-                    { 
+                    if (s.Contains("Descriptor_Deck_Division"))
+                    {
                         foreach (Division division in Divisionlist)
                         {
-                        if (s.Contains(division.getname())) { FoundD = division; break; }
-                        }                    
+                            if (s.Contains(division.getname())) { FoundD = division; break; }
+                        }
                     }
-                    
+
                     if (!FoundU)
                     {
                         foreach (Unit unit in FoundD.OverflowUnits)
@@ -335,7 +336,7 @@ public class FileOpener
                                 Found = unit;
                                 FoundU = true;
                                 //FoundC = 0;
-                                
+
 
                             }
 
@@ -364,10 +365,10 @@ public class FileOpener
                             foreach (string i in array)
                             {
                                 transport temp = new transport();
-                                temp.unitname = i.Replace("]","");
+                                temp.unitname = i.Replace("]", "");
                                 temp.unitname = i.Replace(",", "");
                                 temp.unitname = i.Replace("~", "");
-                                if (temp.unitname.Contains("Descriptor_Unit")){ Found.transports.Add(temp); }
+                                if (temp.unitname.Contains("Descriptor_Unit")) { Found.transports.Add(temp); }
                             }
                         }
                         if (s.Contains("NumberOfUnitInPackXPMultiplier"))
@@ -444,7 +445,7 @@ public class FileOpener
                             s = s.Substring(s.IndexOf(","));
                             string justNumbers = string.Concat(s.Where(char.IsDigit));
                             division.id = int.Parse(justNumbers);
-                           // AllDivs.Remove(division);
+                            // AllDivs.Remove(division);
                             break;
                         }
                     }
@@ -455,7 +456,7 @@ public class FileOpener
                             s = s.Substring(s.IndexOf(","));
                             string justNumbers = string.Concat(s.Where(char.IsDigit));
                             unit.id = int.Parse(justNumbers);
-                           // AllUnits.Remove(unit);
+                            // AllUnits.Remove(unit);
                             break;
                         }
                     }
@@ -475,7 +476,7 @@ public class FileOpener
         }
 
     }
-    string stripstuff(string input) 
+    string stripstuff(string input)
     {
         string temp2 = input.Trim();
         string temp = temp2.Substring(temp2.IndexOf("D"));
@@ -484,7 +485,7 @@ public class FileOpener
     }
     void getunitdetails()
     {
-        
+
         List<Unit> AllUnits = new List<Unit>();
         List<transport> Alltransport = new List<transport>();
         foreach (Division division in Divisionlist)
@@ -521,26 +522,28 @@ public class FileOpener
                                     Foundu.Username = s.Substring(s.IndexOf("'"));
                                     Foundu.Username = Foundu.Username.Substring(0, Foundu.Username.LastIndexOf("'"));
                                     BoolFoundU = false;
-                                    
-                                    
-                                }FounduL.Clear();
+
+
+                                }
+                                FounduL.Clear();
                             }
                             if (BoolFoundT)
                             {
                                 foreach (transport Foundt in FoundtL)
                                 {
                                     Foundt.username = s.Substring(s.IndexOf("'"));
-                                Foundt.username = Foundt.username.Substring(0, Foundt.username.LastIndexOf("'"));
-                                BoolFoundT = false;
-                                
-                            }FoundtL.Clear();
-                        }
+                                    Foundt.username = Foundt.username.Substring(0, Foundt.username.LastIndexOf("'"));
+                                    BoolFoundT = false;
+
+                                }
+                                FoundtL.Clear();
+                            }
                         }
                     }
-                        if (BoolFoundU)
+                    if (BoolFoundU)
+                    {
+                        if (s.Contains("Factory"))
                         {
-                            if (s.Contains("Factory"))
-                            {
                             //s = s.Substring(s.IndexOf("/"));
                             foreach (Unit Foundu in FounduL)
                             {
@@ -553,46 +556,48 @@ public class FileOpener
                                 if (s.Contains("Helis")) { Foundu.unitType = UnitType.HEL; }
                                 if (s.Contains("Planes")) { Foundu.unitType = UnitType.AIR; }
                             }
-                            }
                         }
-                        if (s.Contains("Descriptor_Unit_")) {
+                    }
+                    if (s.Contains("Descriptor_Unit_"))
+                    {
                         foreach (transport t in Alltransport)
                         {
-                        string temp2 = t.unitname.Trim();
-                        string temp = temp2.Substring(temp2.IndexOf("D"));
-                        temp = temp.Substring(0, temp.Length - 1);
-                        if (s.Contains(temp))
-                        {                            
+                            string temp2 = t.unitname.Trim();
+                            string temp = temp2.Substring(temp2.IndexOf("D"));
+                            temp = temp.Substring(0, temp.Length - 1);
+                            if (s.Contains(temp))
+                            {
                                 FoundtL.Add(t);
                                 BoolFoundT = true;
-                                
+
                             }
                         }
-                        foreach (Unit u in AllUnits) {
-                        string temp2 = u.unitname.Trim();
-                        string temp = temp2.Substring(temp2.IndexOf("D"));
-                        temp = temp.Substring(0,temp.Length -1);
-                        if (s.Contains(temp))
+                        foreach (Unit u in AllUnits)
+                        {
+                            string temp2 = u.unitname.Trim();
+                            string temp = temp2.Substring(temp2.IndexOf("D"));
+                            temp = temp.Substring(0, temp.Length - 1);
+                            if (s.Contains(temp))
                             {
                                 FounduL.Add(u);
                                 BoolFoundU = true;
-                                
+
                             }
 
 
                         }
                     }
-                    }
                 }
             }
-        
+        }
+
         foreach (Division division in Divisionlist)
         {
             foreach (Unit U in division.OverflowUnits)
             {
                 switch (U.unitType)
                 {
-                                        
+
                     case UnitType.LOG:
                         {
                             division.LogiUnits.Add(U);
@@ -620,7 +625,7 @@ public class FileOpener
                     case UnitType.REC:
                         {
                             division.RecUnits.Add(U);
-                           // division.OverflowUnits.Remove(U);
+                            // division.OverflowUnits.Remove(U);
                             break;
                         }
                     case UnitType.AA:
@@ -635,22 +640,116 @@ public class FileOpener
                             //division.OverflowUnits.Remove(U);
                             break;
                         }
-                     case UnitType.AIR: 
+                    case UnitType.AIR:
                         {
-                        
-                            division.airUnits.Add(U);  
-                           // division.OverflowUnits.Remove(U);
+
+                            division.airUnits.Add(U);
+                            // division.OverflowUnits.Remove(U);
                             break;
-                        }                       
+                        }
 
-                        
-
-                }
-                        
 
 
                 }
-            
+
+
+
+            }
+
+        }
+    }
+
+    void getunitnames()
+    {
+        List<Unit> AllUnits = new List<Unit>();
+        List<transport> Alltransport = new List<transport>();
+        foreach (Division division in Divisionlist)
+        {
+            foreach (Unit U in division.OverflowUnits)
+            {
+                AllUnits.Add(U);
+                foreach (transport T in U.transports)
+                {
+                    Alltransport.Add(T);
+                }
+            }
+        }
+        string path = @"Data/UnitNames.txt";
+
+
+        using StreamReader sr = File.OpenText(path);
+        {
+            string s;
+
+            List<Unit> FounduL = new List<Unit>();
+            bool BoolFoundU = false;
+
+            List<transport> FoundtL = new List<transport>();
+
+            bool BoolFoundT = false;
+
+            while ((s = sr.ReadLine()) != null)
+            {
+                if (BoolFoundT | BoolFoundU)
+                {
+                    if (s.Contains("name:"))
+                    {
+                        if (BoolFoundU)
+                        {
+                            foreach (Unit Foundu in FounduL)
+                            {
+                                Foundu.Username = s.Substring(s.IndexOf("'"));
+                                Foundu.Username = Foundu.Username.Substring(0, Foundu.Username.LastIndexOf("'"));
+                                BoolFoundU = false;
+
+
+                            }
+                            FounduL.Clear();
+                        }
+                        if (BoolFoundT)
+                        {
+                            foreach (transport Foundt in FoundtL)
+                            {
+                                Foundt.username = s.Substring(s.IndexOf("'"));
+                                Foundt.username = Foundt.username.Substring(0, Foundt.username.LastIndexOf("'"));
+                                BoolFoundT = false;
+
+                            }
+                            FoundtL.Clear();
+                        }
+                    }
+                }
+
+                if (s.Contains("id:"))
+                {
+                    foreach (transport t in Alltransport)
+                    {
+                        int temp = t.id;
+                        string justNumbers = string.Concat(s.Where(char.IsDigit));
+
+                        if (temp == Int32.Parse(justNumbers))
+                        {
+                            FoundtL.Add(t);
+                            BoolFoundT = true;
+
+                        }
+                    }
+                    foreach (Unit u in AllUnits)
+                    {
+                        int temp = u.id;
+                        string justNumbers = string.Concat(s.Where(char.IsDigit));
+
+                        if (temp == Int32.Parse(justNumbers))
+                        {
+                            FounduL.Add(u);
+                            BoolFoundU = true;
+
+                        }
+                    }
+                }
             }
         }
     }
+}
+
+                
